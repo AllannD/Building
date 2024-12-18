@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Map Segmentation</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="header-container">
+            <h1 class="logo">G3 Project</h1>
+            <button class="about-button">About Us</button>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>Interactive</h1>
+            <h1>Map Segmentation</h1>
+            <p>Jakarta, Indonesia</p>
+        </section>
+
+        <section class="content">
+            <h2>Introduction to this Project</h2>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </p>
+        </section>
+
+        <section class="data">
+            
+            <div class="carousel">
+                <button class="carousel-button prev">❮</button>
+                <div class="carousel-images">
+                    <img src="image5.png" alt="Image 1">
+                    <img src="image5.png" alt="Image 2">
+                    <img src="image5.png" alt="Image 3">
+                </div>
+                <button class="carousel-button next">❯</button>
+                <script>
+                    const carousel = document.querySelector('.carousel-images');
+                    const images = document.querySelectorAll('.carousel-images img');
+                    const prevButton = document.querySelector('.carousel-button.prev');
+                    const nextButton = document.querySelector('.carousel-button.next');
+                    let currentIndex = 0;
+                
+                    function updateCarousel() {
+                        const width = images[0].clientWidth;
+                        carousel.style.transform = `translateX(-${currentIndex * width}px)`;
+                    }
+                
+                    nextButton.addEventListener('click', () => {
+                        currentIndex = (currentIndex + 1) % images.length;
+                        updateCarousel();
+                    });
+                
+                    prevButton.addEventListener('click', () => {
+                        currentIndex = (currentIndex - 1 + images.length) % images.length;
+                        updateCarousel();
+                    });
+                
+                    
+                    window.addEventListener('resize', updateCarousel);
+                </script>
+                
+            </div>
+        </section>
+        
+
+        <section class="setup">
+            <h2>Setting up the Environment and Data Acquisition</h2>
+            <p>
+                To initiate the building segmentation process, we first establish a Python environment equipped with essential libraries such as segment geospacial, LeafMap, and SAMgeo. Subsequently, we load a base map from OpenStreetMap using the LeafMap library, providing a visual reference for the segmentation process. For data acquisition, we utilize satellite imagery sourced from Google Maps and leverage pre-existing building footprint data in the format of JakartaBuilding shapefiles. 
+            </p>
+            <img src="image5.png" alt="Map example" class="map-image">
+            <!-- <iframe src="https://ee-nikolsonriandi.projects.earthengine.app/view/urbansprawljakartaonly" width="100%" height="800" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> -->
+        </section>
+
+        <section class="capturing">
+            <h2>Capturing Satellite Imagery from Google Maps</h2>
+            <p>
+                Once the environment and data are set up, we captured a satellite imagery of area of buildings that are going to be segmented from Google Maps. This satellite imagery then would be combined with the existing shapefile of Jakarta's building footprint as reference data. 
+            </p>
+            <img src="image5.png" alt="Map example" class="map-image">
+            <!-- <iframe src="https://ee-nikolsonriandi.projects.earthengine.app/view/urbansprawljakartaonly" width="100%" height="800" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> -->
+        </section>
+
+        <section class="point">
+            <h2>Point Prompts Making to Make Object Masks with QGIS</h2>
+            <p>
+                To create object masks for automated segmentation, a set of control points is manually digitized on the building outlines using the QGIS software. A satellite image of the target area, previously acquired from Google Maps, serves as the basemap for this process. These control points are used to define the boundaries of the buildings and will be used to train a machine learning model for automated segmentation. 
+            </p>
+            <img src="image5.png" alt="Map example" class="map-image">
+            <!-- <iframe src="https://ee-nikolsonriandi.projects.earthengine.app/view/urbansprawljakartaonly" width="100%" height="800" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> -->
+        </section>
+
+        <section class="segment">
+            <h2>Segmented Masks Result from Point Prompts</h2>
+            <p>
+                The created points prompts were exported to a JSON file format and then processed in Google Colab to generate segmented masks as shown in the figure
+            </p>
+            <img src="image5.png" alt="Map example" class="map-image">
+            <!-- <iframe src="https://ee-nikolsonriandi.projects.earthengine.app/view/urbansprawljakartaonly" width="100%" height="800" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> -->
+        </section>
+
+        <section class="regularized">
+            <h2>Regularized Building Footprints Result</h2>
+            <p>
+                By using the regularize() function, the segmented masks from the previous step are further refined through a regularization process. This involves smoothing the edges of the building polygons and removing any unnecessary details or noise. 
+            </p>
+            <img src="image5.png" alt="Map example" class="map-image">
+            <!-- <iframe src="https://ee-nikolsonriandi.projects.earthengine.app/view/urbansprawljakartaonly" width="100%" height="800" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> -->
+        </section>
+
+        <section class="interactive">
+            <h2>Interactive Segmentation</h2>
+            <p>Use our interactive map to explore segmented buildings in Jakarta.</p>
+            <div class="map-container">
+                <img src="image5.png" alt="Interactive Map">
+            </div>
+        </section>
+
+        <section class="contributors">
+            <h2>Contributors</h2>
+            <div class="team">
+                <div class="person">Alice</div>
+                <div class="person">Michael</div>
+                <div class="person">Ryan</div>
+                <div class="person">Sarah</div>
+            </div>
+        </section>
+    </main>
+    <footer class="footer">
+        <div class="text">
+            <h2 class="line1">G3 Project</h2>
+            <h2 class="line2">Semester 7 Project</h2>
+            <h2>Building Segmentation</h2>
+        </div>
+        <p>&copy; 2024 Building Segmentation Project. All rights reserved.</p>
+    </footer>
+</body>
+</html>
